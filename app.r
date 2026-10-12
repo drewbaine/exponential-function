@@ -13,11 +13,11 @@ ui <- fluidPage(
       selectInput(
         "choice",
         "Choose:",
-        choices = c("A", "B", "C","D")
+        choices = c("Probability Density Function (PDF)", "Cumulative Distribution Function (CDF)", "Tail Probability")
       ),    
     
     conditionalPanel(
-      condition = "input.choice == 'A'",
+      condition = "input.choice == 'Probability Density Function (PDF)'",
       numericInput(
         inputId = "rate",
         label = "rate",
@@ -34,7 +34,7 @@ ui <- fluidPage(
     
     
     conditionalPanel(
-      condition = "input.choice == 'B'",
+      condition = "input.choice == 'Cumulative Distribution Function (CDF)'",
       numericInput(
         inputId = "rate",
         label = "rate",
@@ -51,49 +51,20 @@ ui <- fluidPage(
         inputId = "lowertail",
         label = "lower.tail",
         choices = c("TRUE", "FALSE"),
-        selected = "FALSE"
+        selected = "TRUE"
       )
     ),
     
     
     
     conditionalPanel(
-      condition = "input.choice == 'C'",
+      condition = "input.choice == 'Tail Probability'",
       numericInput(
         inputId = "probability",
         label = "probability",
         value = 1
       ), 
         numericInput(
-        inputId = "rate",
-        label = "rate",
-        value = 1
-      ), 
-      "No restrictions",
-      hr(), 
-      numericInput(
-        inputId = "max",
-        label = "Maximum",
-        value = 3
-      ),
-      selectInput(
-        inputId = "lowertail",
-        label = "lower.tail",
-        choices = c("TRUE", "FALSE"),
-        selected = "FALSE"
-      )
-    ) ,
-    
-    
-    
-    conditionalPanel(
-      condition = "input.choice == 'D'",
-      numericInput(
-        inputId = "p",
-        label = "p",
-        value = 1
-      ), 
-      numericInput(
         inputId = "rate",
         label = "rate",
         value = 1
@@ -125,7 +96,7 @@ server <- function(input, output) {
 
   output$distPlot <- renderPlot({
     
-    if (input$choice == "A") {
+    if (input$choice == "Probability Density Function (PDF)") {
       
       tibble(
         x = seq(from = 0, to = input$max, length = 500),
@@ -135,7 +106,7 @@ server <- function(input, output) {
         geom_line() + 
         theme_bw()
       
-    } else if (input$choice == "B") {
+    } else if (input$choice == "Cumulative Distribution Function (CDF)") {
       
       tibble(
         x = seq(from = 0, to = input$max, length = 500),
@@ -149,7 +120,7 @@ server <- function(input, output) {
         geom_line() + 
         theme_bw()
       
-    } else if (input$choice == "C") {
+    } else if (input$choice == "Tail Probability") {
       rate <- input$rate
       p <- input$probability
       lower_tail <- as.logical(input$lowertail)
