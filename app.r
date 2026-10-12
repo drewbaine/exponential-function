@@ -2,9 +2,6 @@ library(shiny)
 library(ggplot2)
 library(dplyr)
 library(tibble)
-install.packages("renv")
-renv::init()   # Initialize renv in your project
-renv::snapshot() # Generate the renv.lock file
 
 ui <- fluidPage(
 
